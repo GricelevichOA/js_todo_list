@@ -30,6 +30,9 @@ function getTodos() {
 function createTodo(todo) {
   const newTodo = document.createElement("div");
   newTodo.innerText = todo.text;
+  if (todo.completed) {
+    newTodo.classList.add("completed");
+  }
   return newTodo;
 }
 
