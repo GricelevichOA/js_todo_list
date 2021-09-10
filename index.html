@@ -7,18 +7,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ToDo List</title>
   <link rel="stylesheet" href="style.css">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+    crossorigin="anonymous">
 </head>
 
 <body>
-  <h1>JavaScript ToDo List</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-10">
+        <div class="card" style="width: 18rem;">
+          <img
+            src="https://imgix.bustle.com/uploads/shutterstock/2021/1/19/afb7893e-9778-4144-be8e-abbb72a11162-shutterstock-1061307191.jpg?w=800&fit=crop&crop=faces&auto=format%2Ccompress"
+            class="card-img-top" alt="ToDos">
+          <div class="card-body">
+            <h5 class="card-title">JavaScript ToDo List</h5>
+            <p class="card-text">Some quick example text to build on the card
+              title
+              and make up the bulk of the card's content.</p>
+          </div>
+          <ul class="list-group list-group-flush" id="todos">
 
-  <form id="form">
-    <label for="todoInput">Input ToDo</label>
-    <input type="text" name="todoInput" id="todoInput">
-    <button type="submit">Add ToDo</button>
-  </form>
+          </ul>
+          <div class="card-body">
+            <form id="form">
+              <input type="text" class="form-control" id="todoInput"
+                placeholder="Enter your task">
+              <!-- <button type="submit" class="btn btn-primary">Add ToDo</button> -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <div id="todos">
   </div>
 
   <script src="script.js"></script>

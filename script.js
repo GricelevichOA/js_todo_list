@@ -31,13 +31,13 @@ function getTodos() {
 
 // create todo
 function createTodo(todo) {
-  const newDiv = document.createElement("div");
-  newDiv.innerText = todo.text;
-  newDiv.classList.add("todo");
+  const newLi = document.createElement("li");
+  newLi.innerText = todo.text;
+  newLi.classList.add("todo", "list-group-item");
   if (todo.completed) {
-    newDiv.classList.add("completed");
+    newLi.classList.add("bg-success");
   }
-  return newDiv;
+  return newLi;
 }
 
 // add todo to array
@@ -61,7 +61,7 @@ todosForm.addEventListener("submit", (e) => {
 
 todoList.addEventListener("click", (e) => {
   if (e.target.classList.contains("todo"))
-    e.target.classList.toggle("completed");
+    e.target.classList.toggle("bg-success");
 });
 
 getTodos();
