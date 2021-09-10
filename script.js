@@ -7,30 +7,30 @@ const todos = [
     text: "buy milk",
     completed: true,
   },
+  {
+    text: "do something stupid",
+    completed: true,
+  },
+  {
+    text: "create todo list",
+    completed: false,
+  },
 ];
 
 const form = document.querySelector("#form");
 const todoList = document.querySelector("#todos");
 
+// get all todos
 function getTodos() {
-  // console.log(todos);
-  for (let todo of todos) {
-    createTodo(todo);
-    // console.log(todo);
+  for (todo of todos) {
+    todoList.insertAdjacentElement("beforeend", createTodo(todo));
   }
 }
 
 function createTodo(todo) {
-  const li = document.createElement("li");
-  li.innerText = todo.text;
-  todoList.insertAdjacentElement("afterbegin", li);
+  const newTodo = document.createElement("div");
+  newTodo.innerText = todo.text;
+  return newTodo;
 }
-
-function handleSubmit() {}
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  console.log(form.todoInput.value);
-});
 
 getTodos();
