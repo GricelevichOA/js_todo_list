@@ -17,23 +17,45 @@ const todos = [
   },
 ];
 
-const form = document.querySelector("#form");
+const todosForm = document.querySelector("#form");
+const todosInput = document.querySelector("#todoInput");
 const todoList = document.querySelector("#todos");
 
-// get all todos
+// render todos on page
 function getTodos() {
+  todoList.innerHTML = "";
   for (todo of todos) {
     todoList.insertAdjacentElement("beforeend", createTodo(todo));
   }
 }
 
+// create todo
 function createTodo(todo) {
-  const newTodo = document.createElement("div");
-  newTodo.innerText = todo.text;
+  const newDiv = document.createElement("div");
+  newDiv.innerText = todo.text;
   if (todo.completed) {
-    newTodo.classList.add("completed");
+    newDiv.classList.add("completed");
   }
-  return newTodo;
+  return newDiv;
 }
+
+// add todo to array
+function addTodo(text) {
+  const newTodo = {
+    text: text,
+    completed: false,
+  };
+  todos.push(newTodo);
+}
+
+todosForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const newTodoText = todosInput.value;
+
+  if (newTodoText) addTodo(newTodoText);
+
+  todosInput.value = "";
+  getTodos();
+});
 
 getTodos();
