@@ -33,6 +33,7 @@ function getTodos() {
 function createTodo(todo) {
   const newDiv = document.createElement("div");
   newDiv.innerText = todo.text;
+  newDiv.classList.add("todo");
   if (todo.completed) {
     newDiv.classList.add("completed");
   }
@@ -56,6 +57,11 @@ todosForm.addEventListener("submit", (e) => {
 
   todosInput.value = "";
   getTodos();
+});
+
+todoList.addEventListener("click", (e) => {
+  if (e.target.classList.contains("todo"))
+    e.target.classList.toggle("completed");
 });
 
 getTodos();
