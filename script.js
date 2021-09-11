@@ -32,11 +32,19 @@ function getTodos() {
 // create todo
 function createTodo(todo) {
   const newLi = document.createElement("li");
+  const delBtn = document.createElement("button");
+
   newLi.innerText = todo.text;
   newLi.classList.add("todo", "list-group-item");
   if (todo.completed) {
-    newLi.classList.add("bg-success");
+    newLi.classList.add("list-group-item-warning", "completed");
   }
+
+  delBtn.innerText = "Delete";
+  delBtn.classList.add("btn", "btn-danger", "btn-delete", "float-end");
+
+  newLi.appendChild(delBtn);
+
   return newLi;
 }
 
@@ -59,9 +67,17 @@ todosForm.addEventListener("submit", (e) => {
   getTodos();
 });
 
+// mark as completed
 todoList.addEventListener("click", (e) => {
-  if (e.target.classList.contains("todo"))
-    e.target.classList.toggle("bg-success");
+  if (e.target.classList.contains("todo")) {
+    e.target.classList.toggle("list-group-item-warning");
+    e.target.classList.toggle("completed");
+  }
+});
+
+todoList.addEventListener("click", (e) => {
+  if (e.target.classList.contains("btn-delete"))
+    e.target.parentElement.remove();
 });
 
 getTodos();
