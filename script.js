@@ -1,21 +1,4 @@
-const todos = [
-  {
-    text: "become a rockstar",
-    completed: false,
-  },
-  {
-    text: "buy milk",
-    completed: true,
-  },
-  {
-    text: "do something stupid",
-    completed: true,
-  },
-  {
-    text: "create todo list",
-    completed: false,
-  },
-];
+const todos = [];
 
 const todosForm = document.querySelector("#form");
 const todosInput = document.querySelector("#todoInput");
