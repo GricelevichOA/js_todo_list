@@ -55,8 +55,17 @@ todosForm.addEventListener("submit", (e) => {
 // mark as completed
 todoList.addEventListener("click", (e) => {
   if (e.target.classList.contains("todo")) {
-    e.target.classList.toggle("list-group-item-warning");
-    e.target.classList.toggle("completed");
+    // e.target.classList.toggle("list-group-item-warning");
+    // e.target.classList.toggle("completed");
+
+    const newTodos = todos.map((todo) => {
+      if (todo.id === parseInt(e.target.id)) {
+        todo.completed = !todo.completed;
+      }
+      return todo;
+    });
+    todos = newTodos;
+    getTodos();
   }
 });
 
