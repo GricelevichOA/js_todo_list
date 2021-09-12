@@ -1,3 +1,8 @@
 .completed {
   text-decoration: line-through;
 }
+
+.card-img-top {
+  object-fit: cover;
+  height: 15rem;
+}

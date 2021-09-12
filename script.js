@@ -1,4 +1,4 @@
-const todos = [];
+let todos = [];
 
 const todosForm = document.querySelector("#form");
 const todosInput = document.querySelector("#todoInput");
@@ -18,6 +18,7 @@ function createTodo(todo) {
   const delBtn = document.createElement("button");
 
   newLi.innerText = todo.text;
+  newLi.id = todo.id;
   newLi.classList.add("todo", "list-group-item");
   if (todo.completed) {
     newLi.classList.add("list-group-item-warning", "completed");
@@ -36,6 +37,7 @@ function addTodo(text) {
   const newTodo = {
     text: text,
     completed: false,
+    id: Date.now(),
   };
   todos.push(newTodo);
 }
@@ -58,9 +60,15 @@ todoList.addEventListener("click", (e) => {
   }
 });
 
+// delete task
 todoList.addEventListener("click", (e) => {
-  if (e.target.classList.contains("btn-delete"))
-    e.target.parentElement.remove();
+  if (e.target.classList.contains("btn-delete")) {
+    const newTodos = todos.filter(
+      (todo) => todo.id !== parseInt(e.target.parentElement.id)
+    );
+    todos = newTodos;
+    getTodos();
+  }
 });
 
 getTodos();
