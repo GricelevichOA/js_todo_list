@@ -1,83 +1,113 @@
-let todos = [];
+document.addEventListener("DOMContentLoaded", function () {
+  // todos array
+  let todos = getFromLocalStorage();
 
-const todosForm = document.querySelector("#form");
-const todosInput = document.querySelector("#todoInput");
-const todoList = document.querySelector("#todos");
+  // page elements
+  const todosForm = document.querySelector("#form");
+  const todosInput = document.querySelector("#todoInput");
+  const todoList = document.querySelector("#todos");
 
-// render todos on page
-function getTodos() {
-  todoList.innerHTML = "";
-  for (todo of todos) {
-    todoList.insertAdjacentElement("beforeend", createTodo(todo));
-  }
-}
+  // functions
 
-// create todo
-function createTodo(todo) {
-  const newLi = document.createElement("li");
-  const delBtn = document.createElement("button");
-
-  newLi.innerText = todo.text;
-  newLi.id = todo.id;
-  newLi.classList.add("todo", "list-group-item");
-  if (todo.completed) {
-    newLi.classList.add("list-group-item-warning", "completed");
+  // render todos on page
+  function renderTodos(todosArray) {
+    todoList.innerHTML = "";
+    for (todo of todosArray) {
+      todoList.insertAdjacentElement("beforeend", createTodo(todo));
+    }
   }
 
-  delBtn.innerText = "Delete";
-  delBtn.classList.add("btn", "btn-danger", "btn-delete", "float-end");
+  // create todo
+  function createTodo(todo) {
+    const newLi = document.createElement("li");
+    const delBtn = document.createElement("button");
 
-  newLi.appendChild(delBtn);
+    newLi.innerText = todo.text;
+    newLi.id = todo.id;
+    newLi.classList.add("todo", "list-group-item");
+    if (todo.completed) {
+      newLi.classList.add("list-group-item-warning", "completed");
+    }
 
-  return newLi;
-}
+    delBtn.innerText = "Delete";
+    delBtn.classList.add("btn", "btn-danger", "btn-delete", "float-end");
 
-// add todo to array
-function addTodo(text) {
-  const newTodo = {
-    text: text,
-    completed: false,
-    id: Date.now(),
-  };
-  todos.push(newTodo);
-}
+    newLi.appendChild(delBtn);
 
-todosForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const newTodoText = todosInput.value;
+    return newLi;
+  }
 
-  if (newTodoText) addTodo(newTodoText);
+  // add todo to array
+  function addTodo(text) {
+    const newTodo = {
+      text: text,
+      completed: false,
+      id: Date.now(),
+    };
+    todos.push(newTodo);
+    addToLocalStorage(todos);
+  }
 
-  todosInput.value = "";
-  getTodos();
+  // localStorage
+  // save todos in localStorage
+  function addToLocalStorage(todos) {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }
+
+  // get todos from local storage
+  function getFromLocalStorage() {
+    const storage = localStorage.getItem("todos");
+
+    if (storage) {
+      return JSON.parse(storage);
+    } else {
+      return [];
+    }
+  }
+
+  // function calls
+  renderTodos(todos);
+
+  // event listeners
+
+  // submit todo
+  todosForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const newTodoText = todosInput.value;
+
+    if (newTodoText) addTodo(newTodoText);
+
+    todosInput.value = "";
+    renderTodos(todos);
+  });
+
+  // mark todo as completed
+  todoList.addEventListener("click", (e) => {
+    if (e.target.classList.contains("todo")) {
+      // e.target.classList.toggle("list-group-item-warning");
+      // e.target.classList.toggle("completed");
+
+      const newTodos = todos.map((todo) => {
+        if (todo.id === parseInt(e.target.id)) {
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      });
+      todos = newTodos;
+      addToLocalStorage(todos);
+      renderTodos(todos);
+    }
+  });
+
+  // delete todo
+  todoList.addEventListener("click", (e) => {
+    if (e.target.classList.contains("btn-delete")) {
+      const newTodos = todos.filter(
+        (todo) => todo.id !== parseInt(e.target.parentElement.id)
+      );
+      todos = newTodos;
+      addToLocalStorage(todos);
+      renderTodos(todos);
+    }
+  });
 });
-
-// mark as completed
-todoList.addEventListener("click", (e) => {
-  if (e.target.classList.contains("todo")) {
-    // e.target.classList.toggle("list-group-item-warning");
-    // e.target.classList.toggle("completed");
-
-    const newTodos = todos.map((todo) => {
-      if (todo.id === parseInt(e.target.id)) {
-        todo.completed = !todo.completed;
-      }
-      return todo;
-    });
-    todos = newTodos;
-    getTodos();
-  }
-});
-
-// delete task
-todoList.addEventListener("click", (e) => {
-  if (e.target.classList.contains("btn-delete")) {
-    const newTodos = todos.filter(
-      (todo) => todo.id !== parseInt(e.target.parentElement.id)
-    );
-    todos = newTodos;
-    getTodos();
-  }
-});
-
-getTodos();
